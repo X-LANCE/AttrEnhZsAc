@@ -1,0 +1,44 @@
+outputdir: experiment/VGGSound/Train/
+model: AudioTrainModel
+model_kwargs:
+  audio_arch: Cnn14
+  audio_pretrain:
+  audio_model_kwargs: 
+    sample_rate: 32000
+    window_size: 1024
+    hop_size: 320 # 10ms
+    mel_bins: 64
+    fmin: 50
+    fmax: 14000
+train_file: /hpc_stor03/sjtu_home/pingyue.zhang/work/zero-shot/data/vggsound/features/vggsound_train_index_classname.hdf5
+n_epochs: 60
+train_dataloader_args:
+  batch_size: 64
+  num_workers: 16
+val_dataloader_args:
+  batch_size: 64
+  num_workers: 16
+patience: 100
+criterion: CrossEntropyLoss
+criterion_args: {}
+saving_interval: 150
+transform_kwargs:
+  task: audio
+  n_seconds: 10
+  sr: 32000
+leaveout_fold: fold1
+fold_file: folds/class_wise.json
+
+optimizer: SGD
+optimizer_args:
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0001
+scheduler: CosineAnnealingLRReduce
+scheduler_args:
+  T_max: 50 # 50
+  eta_min: 0.00001
+  LR_mult: 0.2
+  warmup: True
+  warmup_from: 0.01
+  warm_epochs: 10

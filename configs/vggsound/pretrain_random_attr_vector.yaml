@@ -1,0 +1,74 @@
+
+outputdir: experiment/RandomSeed/VGGSound/Pretrain/RandomAttr
+model: PretrainRandomAttrVectorModel
+model_kwargs:
+  text_model_kwargs:
+    text_embedding_type: BERT
+    text_embedding_model: sentence-transformers/all-MiniLM-L6-v2
+audio_model_kwargs:
+    # default audio model settings
+    # useful when no pretrained model given
+  model: AudioTrainModel
+  model_kwargs:
+    audio_arch: Cnn14
+    audio_pretrain:
+    audio_model_kwargs: 
+      sample_rate: 32000
+      window_size: 1024
+      hop_size: 320 # 10ms
+      mel_bins: 64
+      fmin: 50
+      fmax: 14000
+
+train_file: /hpc_stor03/sjtu_home/pingyue.zhang/work/zero-shot/data/vggsound/features/vggsound_train_index_classname.hdf5
+n_epochs: 100
+iters_per_epoch: 100
+
+
+tokenizer:
+  tokenizer_type: sentence-transformers/all-MiniLM-L6-v2
+  tokenizer_kwargs:
+    max_length: 80
+    truncation: True
+    padding: max_length
+    return_tensors: pt
+
+dataloader_args:
+  random_strategy: all # all # random # random_with_class
+  batch_size: 256
+  num_workers: 8
+
+
+patience: 3
+criterion: WeightedMultiNCELoss
+criterion_args: 
+  temperature: 0.1
+  out: True
+saving_interval: 150
+output_func_kwargs:
+  pattern: supcon
+optimizer: Adam
+optimizer_args:
+  lr: 0.0001
+scheduler: ReduceLROnPlateau
+scheduler_args:
+  mode: max
+  factor: 0.1
+  patience: 1
+  cooldown: 1
+  verbose: False
+  threshold: 0.005
+transform_kwargs:
+  task: audio
+  n_seconds: 10
+  sr: 32000
+attributes:
+  - class
+  - pitch
+  - emotion
+  - timbre
+  - onomatopoeia
+  - simile
+desc: description/vgg_desc.tsv
+leaveout_fold: fold1
+fold_file: folds/class_wise.json
