@@ -5,7 +5,7 @@ import json
 import numpy as np
 
 
-VGGSOUND_PATH = "../"
+VGGSOUND_PATH = "./data/vggsound"
 VGGSOUND_PATH = Path(VGGSOUND_PATH)
 
 MAPPING_FILE = VGGSOUND_PATH / 'features/vggsound_mapping.json'

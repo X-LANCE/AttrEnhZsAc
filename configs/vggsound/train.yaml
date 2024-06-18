@@ -10,7 +10,7 @@ model_kwargs:
     mel_bins: 64
     fmin: 50
     fmax: 14000
-train_file: /hpc_stor03/sjtu_home/pingyue.zhang/work/zero-shot/data/vggsound/features/vggsound_train_index_classname.hdf5
+train_file: ./data/vggsound/features/vggsound_train_index.hdf5
 n_epochs: 60
 train_dataloader_args:
   batch_size: 64

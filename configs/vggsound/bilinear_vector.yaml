@@ -56,7 +56,7 @@ scheduler_args:
   verbose: False
   threshold: 0.005
 
-train_file: /hpc_stor03/sjtu_home/pingyue.zhang/work/zero-shot/data/vggsound/features/vggsound_train_index_classname.hdf5
+train_file: ./data/vggsound/features/vggsound_train_index.hdf5
 attributes:
   - class
   - pitch
