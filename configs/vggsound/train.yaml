@@ -13,10 +13,10 @@ model_kwargs:
 train_file: ./data/vggsound/features/vggsound_train_index.hdf5
 n_epochs: 60
 train_dataloader_args:
-  batch_size: 64
+  batch_size: 32
   num_workers: 16
 val_dataloader_args:
-  batch_size: 64
+  batch_size: 32
   num_workers: 16
 patience: 100
 criterion: CrossEntropyLoss
